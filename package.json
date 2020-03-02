@@ -4,16 +4,22 @@
   "description": "",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "eslint src/**"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/phlgr/pokedex.git"
   },
-  "author": "Philipp Gartz",
+  "author": "Philipp",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/phlgr/pokedex/issues"
   },
-  "homepage": "https://github.com/phlgr/pokedex#readme"
+  "homepage": "https://github.com/phlgr/pokedex#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1"
+  }
 }
