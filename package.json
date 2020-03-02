@@ -26,12 +26,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test",
+      "pre-commit": "lint-staged",
       "pre-push": "npm test"
     }
   },
   "lint-staged": {
     "*.{js}": "eslint --fix",
-    "*.{js,css,scss,md,json}": "prettier --write"
+    "*.{js,css,scss,md,json}": "prettier --write",
+    "*.js": "eslint --cache --fix"
   }
 }
