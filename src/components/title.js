@@ -1,6 +1,6 @@
-export function title() {
+export function createTitle(title) {
   const element = document.createElement('h1');
-  element.innerText = 'Pokedex';
+  element.innerText = title;
   element.className = 'title';
   return element;
 }

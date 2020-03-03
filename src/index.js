@@ -1,6 +1,7 @@
-import { createSearch } from './components/search.js';
-import { title } from './components/title';
 import './index.scss';
+import { app } from './app';
 
-document.body.appendChild(title());
-document.body.appendChild(createSearch());
+const elements = app();
+elements.forEach(element => {
+  document.body.appendChild(element);
+});
