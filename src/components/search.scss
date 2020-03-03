@@ -1,0 +1,14 @@
+@use "../variables";
+.search {
+  border: none;
+  outline: none;
+  background: transparent;
+  border-bottom: 2px solid variables.$text-primary;
+  margin: 25px 0px;
+  color: variables.$text-primary;
+  font-size: 1rem;
+
+  &::placeholder {
+    color: darken(variables.$text-primary, 5%);
+  }
+}
