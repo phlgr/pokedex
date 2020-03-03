@@ -16,5 +16,9 @@ export function app() {
   header.appendChild(title);
   header.appendChild(search);
 
+  search.addEventListener('input', searchField => {
+    console.log(searchField.target.value);
+  });
+
   return [header, main];
 }
