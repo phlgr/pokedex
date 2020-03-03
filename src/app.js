@@ -1,9 +1,10 @@
 import './app.scss';
-import { createElement } from './lib/dom';
+import { createElement, appendContent } from './lib/dom';
 import { createSearch } from './components/search';
 import { createTitle } from './components/title';
 import { createImg } from './components/img';
 import pokedex_logo from './assets/pokedex_logo.svg';
+import { pokemons, createCards } from './components/pokemon';
 
 export function app() {
   const header = createElement('header', {
@@ -23,15 +24,24 @@ export function app() {
   const logo = createImg(pokedex_logo, 'header__logo');
   const search = createSearch();
 
-  header.appendChild(brand);
-  brand.appendChild(logo);
-  brand.appendChild(title);
-  header.appendChild(search);
+  appendContent(header, [brand, search]);
+  appendContent(brand, [logo, title]);
 
   main.appendChild(cardText);
 
+  let searchResults = createCards(pokemons);
+  main.appendChild(searchResults);
+
   search.addEventListener('input', searchField => {
-    cardText.innerText = searchField.target.value;
+    main.removeChild(searchResults);
+
+    const searchValue = searchField.target.value;
+    const filteredPokemons = pokemons.filter(pokemon => {
+      return pokemon.startsWith(searchValue);
+    });
+
+    searchResults = createCards(filteredPokemons);
+    main.appendChild(searchResults);
   });
 
   return [header, main];
