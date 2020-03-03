@@ -1,4 +1,6 @@
-import { pokemon } from './components/pokemon';
+import { createSearch } from './components/search.js';
+import { title } from './components/title';
 import './index.scss';
 
-document.body.appendChild(pokemon());
+document.body.appendChild(title());
+document.body.appendChild(createSearch());
