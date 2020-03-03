@@ -1,9 +1,22 @@
+@use "variables";
 .header {
-  margin: 20px;
+  margin: 0px 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .main {
   display: flex;
   justify-content: center;
+}
+
+.brand {
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.header__logo {
+  max-height: 100%;
+  fill: variables.$text-primary;
 }
