@@ -33,6 +33,7 @@ export function app() {
   main.appendChild(searchResults);
 
   search.addEventListener('input', searchField => {
+    console.log(searchField);
     main.removeChild(searchResults);
 
     const searchValue = searchField.target.value;
