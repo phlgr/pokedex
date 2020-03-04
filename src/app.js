@@ -24,18 +24,31 @@ export function app() {
   appendContent(header, [brand, search]);
   appendContent(brand, [logo, title]);
 
-  let searchResults = createCards(pokemons);
+  console.log(JSON.parse(sessionStorage.getItem(1)));
+  let database = [];
+  function setDatabase() {
+    if ('1' in sessionStorage) {
+      database = JSON.parse(sessionStorage.getItem(1));
+    } else {
+      database = pokemons;
+    }
+  }
+  setDatabase();
+
+  let searchResults = createCards(database);
   main.appendChild(searchResults);
+  search.value = sessionStorage.getItem(0);
 
   search.addEventListener('input', searchField => {
     console.log(searchField);
     main.removeChild(searchResults);
 
     const searchValue = searchField.target.value.toLowerCase();
+    sessionStorage.setItem(0, search.value);
     const filteredPokemons = pokemons.filter(pokemon => {
-      return pokemon.toLowerCase().startsWith(searchValue);
+      return pokemon.toLowerCase().includes(searchValue);
     });
-
+    sessionStorage.setItem(1, JSON.stringify(filteredPokemons));
     searchResults = createCards(filteredPokemons);
     main.appendChild(searchResults);
   });

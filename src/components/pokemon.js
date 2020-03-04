@@ -155,6 +155,7 @@ export const pokemons = [
 ];
 
 export function createCards(database) {
+  console.log(database);
   const container = createElement('div', {
     className: 'pokemons'
   });
