@@ -16,9 +16,6 @@ export function app() {
   const main = createElement('main', {
     className: 'main'
   });
-  const cardText = createElement('div', {
-    className: 'main__text'
-  });
 
   const title = createTitle('Pokedex');
   const logo = createImg(pokedex_logo, 'header__logo');
@@ -27,8 +24,6 @@ export function app() {
   appendContent(header, [brand, search]);
   appendContent(brand, [logo, title]);
 
-  main.appendChild(cardText);
-
   let searchResults = createCards(pokemons);
   main.appendChild(searchResults);
 
@@ -36,9 +31,9 @@ export function app() {
     console.log(searchField);
     main.removeChild(searchResults);
 
-    const searchValue = searchField.target.value;
+    const searchValue = searchField.target.value.toLowerCase();
     const filteredPokemons = pokemons.filter(pokemon => {
-      return pokemon.startsWith(searchValue);
+      return pokemon.toLowerCase().startsWith(searchValue);
     });
 
     searchResults = createCards(filteredPokemons);

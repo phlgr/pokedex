@@ -155,7 +155,9 @@ export const pokemons = [
 ];
 
 export function createCards(database) {
-  const container = createElement('div', {});
+  const container = createElement('div', {
+    className: 'pokemons'
+  });
 
   database.forEach(pokemon => {
     const element = createElement('div', {

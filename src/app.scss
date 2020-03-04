@@ -20,3 +20,12 @@
   max-height: 100%;
   fill: variables.$text-primary;
 }
+
+.pokemons {
+  display: flex;
+  flex-wrap: wrap;
+}
+.pokemon {
+  flex-basis: calc(100% / 2);
+  text-align: center;
+}
