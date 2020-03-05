@@ -1,9 +1,10 @@
 import './app.scss';
-import { createElement } from './lib/dom';
+import { createElement, appendContent } from './lib/dom';
 import { createSearch } from './components/search';
 import { createTitle } from './components/title';
 import { createImg } from './components/img';
 import pokedex_logo from './assets/pokedex_logo.svg';
+import { pokemons, createCards } from './components/pokemon';
 
 export function app() {
   const header = createElement('header', {
@@ -15,17 +16,41 @@ export function app() {
   const main = createElement('main', {
     className: 'main'
   });
+
   const title = createTitle('Pokedex');
   const logo = createImg(pokedex_logo, 'header__logo');
   const search = createSearch();
 
-  header.appendChild(brand);
-  brand.appendChild(logo);
-  brand.appendChild(title);
-  header.appendChild(search);
+  appendContent(header, [brand, search]);
+  appendContent(brand, [logo, title]);
+
+  console.log(JSON.parse(sessionStorage.getItem(1)));
+  let database = [];
+  function setDatabase() {
+    if ('1' in sessionStorage) {
+      database = JSON.parse(sessionStorage.getItem(1));
+    } else {
+      database = pokemons;
+    }
+  }
+  setDatabase();
+
+  let searchResults = createCards(database);
+  main.appendChild(searchResults);
+  search.value = sessionStorage.getItem(0);
 
   search.addEventListener('input', searchField => {
-    console.log(searchField.target.value);
+    console.log(searchField);
+    main.removeChild(searchResults);
+
+    const searchValue = searchField.target.value.toLowerCase();
+    sessionStorage.setItem(0, search.value);
+    const filteredPokemons = pokemons.filter(pokemon => {
+      return pokemon.toLowerCase().includes(searchValue);
+    });
+    sessionStorage.setItem(1, JSON.stringify(filteredPokemons));
+    searchResults = createCards(filteredPokemons);
+    main.appendChild(searchResults);
   });
 
   return [header, main];

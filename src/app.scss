@@ -1,5 +1,6 @@
 @use "variables";
 .header {
+  height: 100px;
   margin: 0px 20px;
   display: flex;
   justify-content: space-between;
@@ -19,4 +20,13 @@
 .header__logo {
   max-height: 100%;
   fill: variables.$text-primary;
+}
+
+.pokemons {
+  display: flex;
+  flex-wrap: wrap;
+}
+.pokemon {
+  flex-basis: calc(100% / 2);
+  text-align: center;
 }
