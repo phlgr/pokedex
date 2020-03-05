@@ -69,7 +69,7 @@ export function app() {
       return pokemon.toLowerCase().includes(searchValue);
     });
     sessionStorage.setItem(1, JSON.stringify(filteredPokemons));
-    searchResults = createCards(filteredPokemons);
+    searchResults = createCards(filteredPokemons, 'pokemons', 'pokemon');
     main.appendChild(searchResults);
   });
 
