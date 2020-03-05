@@ -16,6 +16,9 @@ export function app() {
   const main = createElement('main', {
     className: 'main'
   });
+  const footer = createElement('footer', {
+    className: 'footer'
+  });
 
   const title = createTitle('Pokedex');
   const logo = createImg(pokedex_logo, 'header__logo');
@@ -35,9 +38,26 @@ export function app() {
   }
   setDatabase();
 
-  let searchResults = createCards(database);
+  let searchResults = createCards(database, 'pokemons', 'pokemon');
   main.appendChild(searchResults);
   search.value = sessionStorage.getItem(0);
+
+  let favorites = createCards(
+    JSON.parse(localStorage.getItem('favorites')) || [],
+    'favorites',
+    'pokemon'
+  );
+  footer.appendChild(favorites);
+
+  document.addEventListener('updateFavorites', () => {
+    footer.removeChild(favorites);
+    favorites = createCards(
+      JSON.parse(localStorage.getItem('favorites')) || [],
+      'favorites',
+      'pokemon'
+    );
+    footer.appendChild(favorites);
+  });
 
   search.addEventListener('input', searchField => {
     console.log(searchField);
@@ -53,5 +73,5 @@ export function app() {
     main.appendChild(searchResults);
   });
 
-  return [header, main];
+  return [header, main, footer];
 }
