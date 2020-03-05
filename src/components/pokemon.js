@@ -155,22 +155,34 @@ export const pokemons = [
   'Mew'
 ];
 
-export function createCards(database) {
+export function createCards(database, containerClassName, pokemonClassName) {
   console.log(database);
   const container = createElement('div', {
-    className: 'pokemons'
+    className: containerClassName
   });
 
   database.forEach(pokemon => {
     const element = createElement('div', {
-      className: 'pokemon',
+      className: pokemonClassName,
       innerText: pokemon
     });
+
     element.addEventListener('click', () => {
       const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-      favorites.push(pokemon);
+      if (!favorites.includes(pokemon)) {
+        favorites.push(pokemon);
+      } else {
+        const itemIndex = favorites.indexOf(pokemon);
+        favorites.splice(itemIndex, 1);
+      }
+
+      if (favorites.length > 6) {
+        favorites.splice(0, 1);
+      }
       const favoritesJSON = JSON.stringify(favorites);
       localStorage.setItem('favorites', favoritesJSON);
+      var event = new Event('updateFavorites');
+      document.dispatchEvent(event);
     });
     container.appendChild(element);
   });

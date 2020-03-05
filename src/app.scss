@@ -11,6 +11,20 @@
   justify-content: center;
 }
 
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background: orange;
+  height: 80px;
+  overflow-y: scroll;
+}
+
+.favorites {
+  display: flex;
+  width: 100vw;
+}
+
 .brand {
   height: 60px;
   display: flex;
@@ -20,13 +34,4 @@
 .header__logo {
   max-height: 100%;
   fill: variables.$text-primary;
-}
-
-.pokemons {
-  display: flex;
-  flex-wrap: wrap;
-}
-.pokemon {
-  flex-basis: calc(100% / 2);
-  text-align: center;
 }
