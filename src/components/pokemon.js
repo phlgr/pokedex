@@ -1,3 +1,4 @@
+import './pokemon.scss';
 import { createElement } from '../lib/dom';
 
 export const pokemons = [
@@ -164,6 +165,12 @@ export function createCards(database) {
     const element = createElement('div', {
       className: 'pokemon',
       innerText: pokemon
+    });
+    element.addEventListener('click', () => {
+      const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      favorites.push(pokemon);
+      const favoritesJSON = JSON.stringify(favorites);
+      localStorage.setItem('favorites', favoritesJSON);
     });
     container.appendChild(element);
   });
