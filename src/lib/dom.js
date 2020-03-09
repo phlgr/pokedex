@@ -15,3 +15,7 @@ export function appendContent(parent, content) {
     parent.appendChild(content);
   }
 }
+
+export function waitFor(time) {
+  setTimeout(() => {}, time);
+}
