@@ -4,7 +4,8 @@ import { createSearch } from './components/search';
 import { createTitle } from './components/title';
 import { createImg } from './components/img';
 import pokedex_logo from './assets/pokedex_logo.svg';
-import { pokemons, createCards } from './components/pokemon';
+import { createCards } from './components/pokemon';
+import { getPokemons } from './lib/pokemons';
 
 export function app() {
   const header = createElement('header', {
@@ -29,17 +30,31 @@ export function app() {
 
   console.log(JSON.parse(sessionStorage.getItem(1)));
   let database = [];
-  function setDatabase() {
+  async function setDatabase() {
     if ('1' in sessionStorage) {
       database = JSON.parse(sessionStorage.getItem(1));
     } else {
-      database = pokemons;
+      database = await getPokemons();
     }
   }
-  setDatabase();
+  setDatabase().then(() => {
+    let searchResults = createCards(database, 'pokemons', 'pokemon');
+    main.appendChild(searchResults);
 
-  let searchResults = createCards(database, 'pokemons', 'pokemon');
-  main.appendChild(searchResults);
+    search.addEventListener('input', searchField => {
+      console.log(searchField);
+      main.removeChild(searchResults);
+
+      const searchValue = searchField.target.value.toLowerCase();
+      sessionStorage.setItem(0, search.value);
+      const filteredPokemons = database.filter(pokemon => {
+        return pokemon.toLowerCase().includes(searchValue);
+      });
+      sessionStorage.setItem(1, JSON.stringify(filteredPokemons));
+      searchResults = createCards(filteredPokemons, 'pokemons', 'pokemon');
+      main.appendChild(searchResults);
+    });
+  });
   search.value = sessionStorage.getItem(0);
 
   let favorites = createCards(
@@ -57,20 +72,6 @@ export function app() {
       'pokemon'
     );
     footer.appendChild(favorites);
-  });
-
-  search.addEventListener('input', searchField => {
-    console.log(searchField);
-    main.removeChild(searchResults);
-
-    const searchValue = searchField.target.value.toLowerCase();
-    sessionStorage.setItem(0, search.value);
-    const filteredPokemons = pokemons.filter(pokemon => {
-      return pokemon.toLowerCase().includes(searchValue);
-    });
-    sessionStorage.setItem(1, JSON.stringify(filteredPokemons));
-    searchResults = createCards(filteredPokemons, 'pokemons', 'pokemon');
-    main.appendChild(searchResults);
   });
 
   return [header, main, footer];
